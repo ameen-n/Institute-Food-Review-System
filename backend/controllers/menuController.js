@@ -18,10 +18,83 @@ exports.newMenu = (req , res) =>{
     })
 }
 
-exports.fetchMenu = (req, res) => {
-    menu.find()
-    .then(fetchedMenu=>res.json(fetchedMenu))
+exports.fetchMenuDefault = (req, res) => {
+    var currentTime = new Date();
+
+    var currentOffset = currentTime.getTimezoneOffset();
+
+    var ISTOffset = 330;   // IST offset UTC +5:30 
+
+    var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+
+    // ISTTime now represents the time in IST coordinates
+
+    var hours = ISTTime.getHours()
+
+    weekDay = 'Sunday';
+    timeOfDay = 'Breakfast';
+
+    switch (ISTTime.getDay())
+    {
+        case 0:
+            weekDay = 'Sunday';
+            break;
+        case 1:
+            weekDay = 'Monday';
+            break;
+        case 2:
+            weekDay = 'Tuesday';
+            break;
+        case 3:
+            weekDay = 'Wednesday';
+            break;
+        case 4:
+            weekDay = "Thursday";
+            break;
+        case 5:
+            weekDay = "Friday";
+            break;
+        case 6:
+            weekDay = "Saturday";
+            break;
+    }
+
+    console.log("fetchMenu: Day is:"+weekDay);
+
+
+    if(hours >= 3 && hours < 12)
+        timeOfDay="Breakfast";
+    else if (hours >= 12 && hours < 16)
+        timeofDay="Lunch";
+    else if (hours >= 16 && hours < 19)
+        timeOfDay = "Snacks";
+    else timeOfDay="Dinner";
+
+    menu.find({day : weekDay, timing : timeOfDay}).then(fetchedMenu=>res.json(fetchedMenu))
     .catch(err => console.log(err))
+}
+
+exports.fetchMenu = (req, res) => {
+    isWeekDayGiven = false;
+    if(req.params.weekDay)
+    {
+        try
+        {
+            isWeekDayGiven = true;
+            weekDay = req.params.weekDay;
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+    
+    if(isWeekDayGiven)
+    {
+        menu.find({day : weekDay}).then(fetchedMenu=>res.json(fetchedMenu))
+        .catch(err => console.log(err))
+    }
+    else this.fetchMenuDefault();
 }
 
 exports.updateMenu = (req, res)=>{
