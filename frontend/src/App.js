@@ -8,6 +8,8 @@ import Logout from "./Components/Logout";
 import MessMenu from "./Components/MessMenu/MessMenu";
 import MenuTable from "./Components/Admin/MenuTable";
 import UserTable from "./Components/Admin/UserTable";
+import Update from "./Components/MessMenu/Update";
+//import Delete from "./Components/Admin/delete";
 
 //css pages
 import './assets/css/bootstrap.min.css';
@@ -35,6 +37,8 @@ function App() {
               <Route exact path="/review" component={Form} />
               <Route exact path="/usertable" component={UserTable} />
               <Route exact path="/menutable" component={MenuTable} />
+              <Route exact path="/update/:id" component={Update} />
+             // <Route exact path="/delete" component={Delete} />
               <Route exact path="/logout" component={Logout} />
               <Route component={Error} />
             </Switch>
