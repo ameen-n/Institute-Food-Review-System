@@ -1,6 +1,5 @@
 // local pages
 import MainHome from "./Components/home/MainHome";
-import Navbar from "./Components/Navbar";
 import Footer from "./Footer";
 import Error from "./Error";
 import Form from "./Components/home/Form";
@@ -8,6 +7,7 @@ import Logout from "./Components/Logout";
 import MessMenu from "./Components/MessMenu/MessMenu";
 import MenuTable from "./Components/Admin/MenuTable";
 import UserTable from "./Components/Admin/UserTable";
+import PerdayFood from "./Components/Admin/MenuShow/PerdayFood";
 
 //css pages
 import './assets/css/bootstrap.min.css';
@@ -18,7 +18,7 @@ import './assets/css_table/main.css';
 import './assets/css/main.css';
 
 // 3rd party imports
-import {Switch , Route , Redirect,BrowserRouter} from "react-router-dom";
+import {Switch , Route , BrowserRouter} from "react-router-dom";
 
 function App() {
   
@@ -35,6 +35,7 @@ function App() {
               <Route exact path="/review" component={Form} />
               <Route exact path="/usertable" component={UserTable} />
               <Route exact path="/menutable" component={MenuTable} />
+              <Route exact path="/menutable/:id" component={PerdayFood} />
               <Route exact path="/logout" component={Logout} />
               <Route component={Error} />
             </Switch>

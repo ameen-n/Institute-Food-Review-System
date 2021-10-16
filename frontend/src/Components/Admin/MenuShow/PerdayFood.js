@@ -1,15 +1,14 @@
-import Navbar from "../Navbar";
-import { useEffect , useState } from "react";
-import MenuCard from "../MessMenu/MenuCard";
-import { Redirect } from "react-router";
-import ShowButton from "./MenuShow/ShowButton";
+import { useEffect, useState } from "react";
+import Navbar from "../../Navbar";
+import MenuCard from "../../MessMenu/MenuCard";
+import { useParams , Redirect  } from "react-router";
+import { useHistory } from "react-router-dom";
 
-const day = ["Sunday" , "Monday", "Tuesday" , "Wednesday" , "Thursday" , "Friday"];
-
-export default function MenuTable(){
-
+export default function PerdayFood(){
+    const { id } = useParams();
+    let history = useHistory();
+    const [data , setData] = useState([]);
     const [redirect, setRedirect] = useState(false);
-    const [menudata, setMenudata] = useState([]);
 
     useEffect(() => {
         let token = sessionStorage.getItem("Token");
@@ -21,19 +20,19 @@ export default function MenuTable(){
             setRedirect(true);
         }
 
-        fetch(process.env.REACT_APP_BACKEND + "/menu/menu", {
-            method: "GET",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id , {
+            method : 'GET',
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             }
         }).then(res => res.json())
-            .then(data => {
-                setMenudata(data)
-            })
-            .catch(err => console.log("something wrong"))
-
-    }, [])
+        .then(fetchdata => {
+            console.log(fetchdata)
+            setData(fetchdata)
+        })
+        .catch(err => console.log(err))
+    }, [id])
     return (
         <>
             <Navbar />
@@ -54,22 +53,19 @@ export default function MenuTable(){
                                         </thead>
                                     </table>
                                 </div>
-                            {console.log(menudata)}
-                            {menudata !== undefined && menudata !== null && menudata && menudata.map((val , index) => {
-                                return (
-                                <MenuCard key={val.id} value={val} />
-                                )
-                            })}
+                                {data !== undefined && data !== null && data.length !== 0 && data.map((val , index) => {
+                                    return (
+                                        <MenuCard key={val.id} value={val} />
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
                 </div>
-                {day.map((val , index)=>{
-                    return (
-                        <ShowButton key={index} value={val} />
-                    )
-                })}
             </section>
+            <div><button class="btn btn-info btn-md ml-3 mr-1 mb-2" onClick={() => history.goBack()}>Go Back</button></div>
+            
+            
         </>
     )
 }
