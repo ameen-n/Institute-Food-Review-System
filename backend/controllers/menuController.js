@@ -7,7 +7,16 @@ const DayinInt  = {
     4  : "Thursday",
     5  : "Friday",
     6  :  "Saturday"
-}
+};
+
+var currentTime = new Date();
+var currentOffset = currentTime.getTimezoneOffset();
+var ISTOffset = 330;   // IST offset UTC +5:30 
+var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+
+// ISTTime now represents the time in IST coordinates
+
+var hours = ISTTime.getHours()
 
 exports.newMenu = (req , res) =>{
     const Menu = new menu ({
@@ -28,17 +37,7 @@ exports.newMenu = (req , res) =>{
 }
 
 exports.fetchMenuDefault = (req, res) => {
-    var currentTime = new Date();
-
-    var currentOffset = currentTime.getTimezoneOffset();
-
-    var ISTOffset = 330;   // IST offset UTC +5:30 
-
-    var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
-
-    // ISTTime now represents the time in IST coordinates
-
-    var hours = ISTTime.getHours()
+    
 
     let weekDay = DayinInt[ISTTime.getDay()];
     timeOfDay = 'Dinner';
