@@ -92,6 +92,7 @@ exports.fetchMenu = (req, res) => {
 }
 
 exports.updateMenu = (req, res)=>{
+    console.log(req.body)
     menu.findById(req.params.id,(err,foundItem)=>{
         if(err)
             return res.json({message:"Error in Fecching Categary, please try again."});

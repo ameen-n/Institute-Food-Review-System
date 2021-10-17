@@ -20,7 +20,7 @@ export default function PerdayFood(){
             setRedirect(true);
         }
 
-        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id , {
+        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/menu/" + id , {
             method : 'GET',
             headers : {
                 'Accept': 'application/json',

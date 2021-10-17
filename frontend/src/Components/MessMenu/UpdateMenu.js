@@ -59,7 +59,7 @@ export default function UpdateMenu() {
     const SubmitHandle = (e) =>{
         e.preventDefault();
         console.log(data);
-        fetch(process.env.REACT_APP_BACKEND + "/form/form/" + id, {
+        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',

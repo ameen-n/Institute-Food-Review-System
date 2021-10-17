@@ -20,6 +20,7 @@ export default function AdminSign() {
                         <ul class="sub-menu">
                             <li><NavLink exact to="/usertable">Users</NavLink></li>
                             <li><NavLink exact to="/menutable">Mess Menu</NavLink></li>
+                            <li><NavLink exact to="/formtable">Form Table</NavLink></li>
                         </ul>
                     </li>
                 </ul>
