@@ -47,6 +47,8 @@ export default function MessMenu() {
                                                 <th className="cell100 column1">Food Item</th>
                                                 <th className="cell100 column2">Timing</th>
                                                 <th className="cell100 column3">Day</th>
+                                                <th className="cell100 column4">Update</th>
+                                                <th className="cell100 column5">Delete</th>
                                             </tr>
                                         </thead>
                                     </table>

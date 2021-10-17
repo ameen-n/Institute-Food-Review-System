@@ -20,7 +20,6 @@ var hours = ISTTime.getHours()
 
 
 exports.newForm = (req , res) =>{
-
     const ratingObject = req.body.RatingFoods;
     const ratingKeyArray = Object.keys(ratingObject);
     const ratingValueArray = Object.values(ratingObject);

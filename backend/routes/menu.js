@@ -5,6 +5,8 @@ const menu_control = require("../controllers/menuController");
 
 
 router.get("/menu" , menu_control.fetchMenuDefault);
+router.get("/menu/:id" , menu_control.fetchMenuDefaultPer);
+router.get("/menuitem" , menu_control.fetchMenuItem);
 
 router.get("/menu/:weekDay" , menu_control.fetchMenu);
 

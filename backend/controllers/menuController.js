@@ -13,7 +13,16 @@ var currentTime = new Date();
 var currentOffset = currentTime.getTimezoneOffset();
 var ISTOffset = 330;   // IST offset UTC +5:30 
 var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+let weekDay = DayinInt[ISTTime.getDay()];
+    timeOfDay = 'Dinner';
 
+
+    if(hours >= 3 && hours < 12)
+        timeOfDay="Breakfast";
+    else if (hours >= 12 && hours < 16)
+        timeofDay="Lunch";
+    else if (hours >= 16 && hours < 19)
+        timeOfDay = "Snacks";
 // ISTTime now represents the time in IST coordinates
 
 var hours = ISTTime.getHours()
@@ -37,21 +46,25 @@ exports.newMenu = (req , res) =>{
 }
 
 exports.fetchMenuDefault = (req, res) => {
-    
-
-    let weekDay = DayinInt[ISTTime.getDay()];
-    timeOfDay = 'Dinner';
-
-
-    if(hours >= 3 && hours < 12)
-        timeOfDay="Breakfast";
-    else if (hours >= 12 && hours < 16)
-        timeofDay="Lunch";
-    else if (hours >= 16 && hours < 19)
-        timeOfDay = "Snacks";
-
-
     menu.find({day : weekDay, timing : timeOfDay}).then(fetchedMenu=>res.status(200).json(fetchedMenu))
+    .catch(err => console.log(err))
+}
+
+exports.fetchMenuDefaultPer = (req, res) => {
+    menu.find({_id : req.params.id}).then(fetchedMenu=>res.status(200).json(fetchedMenu))
+    .catch(err => console.log(err))
+}
+
+exports.fetchMenuItem = (req, res) => {
+    menu.find({day : weekDay, timing : timeOfDay})
+    .select("fooditem")
+    .then(fetchedMenu=>{
+        let sentArr = []
+        for(let i=0; i<fetchedMenu.length; i++){
+            sentArr.push(fetchedMenu[i].fooditem)
+        }
+        res.status(200).json(sentArr)
+    })
     .catch(err => console.log(err))
 }
 

@@ -24,7 +24,7 @@ export default function UserSign(){
                 <NavLink
                     exact
                     activeClassName="menu_active"
-                    className="nav-link"
+                    className="btn btn-danger"
                     to="/logout"
                 >
                     Logout
