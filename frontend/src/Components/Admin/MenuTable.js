@@ -2,6 +2,9 @@ import Navbar from "../Navbar";
 import { useEffect , useState } from "react";
 import MenuCard from "../MessMenu/MenuCard";
 import { Redirect } from "react-router";
+import ShowButton from "./MenuShow/ShowButton";
+
+const day = ["Sunday" , "Monday", "Tuesday" , "Wednesday" , "Thursday" , "Friday", "Saturday"];
 
 export default function MenuTable(){
 
@@ -37,6 +40,13 @@ export default function MenuTable(){
             {redirect && <Redirect to="/" />}
             <section className="mainsection">
                 <div className="limiter">
+                <div class="center"> 
+                    {day.map((val , index)=>{
+                        return (
+                            <ShowButton key={index} value={val} />
+                        )
+                    })}
+                </div>
                     <div className="container-table100">
                         <div className="wrap-table100">
                             <div className="table100 ver1 m-b-110">
@@ -47,6 +57,8 @@ export default function MenuTable(){
                                                 <th className="cell100 column1">Food Item</th>
                                                 <th className="cell100 column2">Timing</th>
                                                 <th className="cell100 column3">Day</th>
+                                                <th className="cell100 column3">Update</th>
+                                                <th className="cell100 column3">Delete</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -61,7 +73,6 @@ export default function MenuTable(){
                         </div>
                     </div>
                 </div>
-
             </section>
         </>
     )

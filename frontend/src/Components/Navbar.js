@@ -1,10 +1,8 @@
-import GoogleLogin from "react-google-login";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/images/logo/logo.png'
 
 import React from "react";
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import AdminSign from "./Navbar/AdminSign";

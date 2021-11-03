@@ -9,11 +9,11 @@ export default function Normal(){
     let Token;
 
     const responseSuccessGoogle = (response) => {
-        // console.log(response)
+        console.log(response)
         // let checkMail = response.it.Tt;
 
         // if (checkMail.slice(-12) === "@iitdh.ac.in") {
-            fetch("http://localhost:8000/api/googlelogin", {
+            fetch(`${process.env.REACT_APP_BACKEND}/api/googlelogin`, {
                 method: "POST",
                 headers: {
                     Accept: 'application/json',
@@ -23,7 +23,7 @@ export default function Normal(){
             }).then(data => data.json())
             .then(res => {
                     //   console.log(res)
-                    if(res.message == "Other mail"){
+                    if(res.message === "Other mail"){
                         toast.warning('Please Login with IITDh Email', {
                                     position: "top-center",
                                     autoClose: 2000,
@@ -64,22 +64,10 @@ export default function Normal(){
                     }
                 })
                 .catch(err => console.log(err))
-        // }
-        // else {
-        //     toast.warning('Please Login with IITDt Email', {
-        //         position: "top-center",
-        //         autoClose: 2000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //     });
-        // }
 
     }
     const responseErrorGoogle = (response) => {
-        console.log("dsv")
+        console.log(response)
         return console.log("fvf")
     }
 
