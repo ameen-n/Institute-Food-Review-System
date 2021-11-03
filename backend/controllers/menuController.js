@@ -1,4 +1,31 @@
 const menu = require("../models/menu");
+const DayinInt  = {
+    0 : "Sunday",
+    1  : "Monday",
+    2 : "Tuesday",
+    3  : "Wednesday",
+    4  : "Thursday",
+    5  : "Friday",
+    6  :  "Saturday"
+};
+
+var currentTime = new Date();
+var currentOffset = currentTime.getTimezoneOffset();
+var ISTOffset = 330;   // IST offset UTC +5:30 
+var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+let weekDay = DayinInt[ISTTime.getDay()];
+    timeOfDay = 'Dinner';
+
+
+    if(hours >= 3 && hours < 12)
+        timeOfDay="Breakfast";
+    else if (hours >= 12 && hours < 16)
+        timeofDay="Lunch";
+    else if (hours >= 16 && hours < 19)
+        timeOfDay = "Snacks";
+// ISTTime now represents the time in IST coordinates
+
+var hours = ISTTime.getHours()
 
 exports.newMenu = (req , res) =>{
     const Menu = new menu ({
@@ -18,15 +45,84 @@ exports.newMenu = (req , res) =>{
     })
 }
 
-exports.fetchMenu = (req, res) => {
-    menu.find()
-    .then(fetchedMenu=>res.json(fetchedMenu))
+exports.fetchMenuDefault = (req, res) => {
+    let currentTime = new Date();
+let currentOffset = currentTime.getTimezoneOffset();
+let ISTOffset = 330;   // IST offset UTC +5:30 
+let ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+let weekDay = DayinInt[ISTTime.getDay()];
+    let timeOfDay = 'Dinner';
+
+
+    if(hours >= 3 && hours < 12)
+        timeOfDay="Breakfast";
+    else if (hours >= 12 && hours < 16)
+        timeofDay="Lunch";
+    else if (hours >= 16 && hours < 19)
+        timeOfDay = "Snacks";
+    // console.log(day , timing)
+    menu.find({day : weekDay, timing : timeOfDay}).then(fetchedMenu=>res.status(200).json(fetchedMenu))
     .catch(err => console.log(err))
 }
 
+exports.fetchMenuDefaultPer = (req, res) => {
+    menu.find({_id : req.params.id}).then(fetchedMenu=>res.status(200).json(fetchedMenu))
+    .catch(err => console.log(err))
+}
+
+exports.fetchMenuItem = (req, res) => {
+    let currentTime = new Date();
+let currentOffset = currentTime.getTimezoneOffset();
+let ISTOffset = 330;   // IST offset UTC +5:30 
+let ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+let weekDay = DayinInt[ISTTime.getDay()];
+    let  timeOfDay = 'Dinner';
+
+
+    if(hours >= 3 && hours < 12)
+        timeOfDay="Breakfast";
+    else if (hours >= 12 && hours < 16)
+        timeofDay="Lunch";
+    else if (hours >= 16 && hours < 19)
+        timeOfDay = "Snacks";
+    menu.find({day : weekDay, timing : timeOfDay})
+    .select("fooditem")
+    .then(fetchedMenu=>{
+        let sentArr = []
+        for(let i=0; i<fetchedMenu.length; i++){
+            sentArr.push(fetchedMenu[i].fooditem)
+        }
+        res.status(200).json(sentArr)
+    })
+    .catch(err => console.log(err))
+}
+
+exports.fetchMenu = (req, res) => {
+    isWeekDayGiven = false;
+    if(req.params.weekDay)
+    {
+        try
+        {
+            isWeekDayGiven = true;
+            weekDay = req.params.weekDay;
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+    
+    if(isWeekDayGiven)
+    {
+        menu.find({day : weekDay}).then(fetchedMenu=>res.status(200).json(fetchedMenu))
+        .catch(err => console.log(err))
+    }
+    else this.fetchMenuDefault();
+}
+
 exports.updateMenu = (req, res)=>{
+    console.log(req.body)
     menu.findById(req.params.id,(err,foundItem)=>{
-        // console.log(req.categary.id)
         if(err)
             return res.json({message:"Error in Fecching Categary, please try again."});
         if(!foundItem)
@@ -36,12 +132,10 @@ exports.updateMenu = (req, res)=>{
                 timing : req.body.timing,
                 day : req.body.day
             }
-            // console.log(req.body)
             menu.findByIdAndUpdate(req.params.id , updatedItem , {
                 new : true, 
                 useFindAndModify : false 
             }).then((new_user,err)=>{
-                // console.log(new_user)
                 if(err){
                    return res.status(500).json({error:"Server Error"})
                 }
@@ -55,7 +149,6 @@ exports.updateMenu = (req, res)=>{
 }
 
 exports.deleteMenu = (req ,res) =>{
-    // console.log(req.params.id);
     menu.findById(req.params.id,(err,foundItem)=>{
         if(err)
             return res.json({message:"Error in Fecching Categary, please try again."});

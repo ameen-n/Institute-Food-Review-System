@@ -8,6 +8,7 @@ const cors = require('cors');
 const userAuth = require("./routes/user.js");
 const menuAuth = require("./routes/menu.js");
 const adminAuth = require("./routes/admin");
+const formAuth = require("./routes/form");
 
 //Datebase connection
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true , useUnifiedTopology: true}).then(() =>{
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/api",userAuth);
 app.use("/menu" , menuAuth);
 app.use('/admin' , adminAuth);
+app.use('/form' , formAuth);
 
 //EndPoints
 app.get("/" , (req, res) =>{
