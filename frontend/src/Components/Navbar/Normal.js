@@ -1,29 +1,48 @@
 import GoogleLogin from "react-google-login";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useHistory } from "react-router-dom";
 
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default function Normal(){
     let Token;
+    const [cookies, setCookie] = useCookies(['user']);
+    let history = useHistory();
 
     const responseSuccessGoogle = (response) => {
         console.log(response)
         // let checkMail = response.it.Tt;
 
         // if (checkMail.slice(-12) === "@iitdh.ac.in") {
-            fetch(`${process.env.REACT_APP_BACKEND}/api/googlelogin`, {
-                method: "POST",
+            // fetch(`${process.env.REACT_APP_BACKEND}/api/googlelogin`, {
+            //     method: "POST",
+            //     headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json',
+            //         withCredentials : true,
+            //         credentials : "include"
+            //     },
+            //     body: JSON.stringify({ tokenId: response.tokenId })
+            // })
+            axios({
+                method : 'post' , 
+                url  : `${process.env.REACT_APP_BACKEND}/api/googlelogin`,
+                data : JSON.stringify({ tokenId: response.tokenId }),
                 headers: {
                     Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ tokenId: response.tokenId })
-            }).then(data => data.json())
+                    'Content-Type': 'application/json',
+                    withCredentials : true,
+                    credentials : 'include'
+                }
+            })
+            // .then(data => data.json())
             .then(res => {
-                    //   console.log(res)
-                    if(res.message === "Other mail"){
+                      console.log(res)
+                    if(res.data.message === "Other mail"){
                         toast.warning('Please Login with IITDh Email', {
                                     position: "top-center",
                                     autoClose: 2000,
@@ -35,10 +54,11 @@ export default function Normal(){
                                 });
                     }else{
 
-                        Token = res.jsonToken;
+                        Token = res.data.jsonToken;
                         if (Token !== undefined && Token !== null) {
-                            sessionStorage.setItem("Token", Token);
-                            sessionStorage.setItem("userInfo", JSON.stringify(res.user));
+                            setCookie('jwttoken', Token, { path: '/' ,  expires : new Date(Date.now() + 48*360000) });
+                            setCookie('ADMIN', res.data.user.isAdmin, { path: '/' ,  expires : new Date(Date.now() + 48*360000) });
+                            setCookie('ID' , res.data.user._id , {path : '/' , expires : new Date(Date.now() + 48*360000)})
                             toast.success('Successfully login', {
                                 position: "top-center",
                                 autoClose: 2000,
@@ -71,19 +91,32 @@ export default function Normal(){
         return console.log("fvf")
     }
 
+    const HandleReq = () => {
+        toast.warning('Please Login', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
     return (
         <>
             <div className="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                 <ul id="nav" className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <NavLink
-                            exact to="/">Home</NavLink></li>
-                    <li className="nav-item">
-                        <NavLink exact to="/mess">Mess Menu</NavLink>
+                            exact to="/">Home</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink exact to="/review">Feedback / Review
-                        </NavLink></li>
+                        <button onClick={HandleReq}>Mess Menu</button>
+                    </li>
+                    <li className="nav-item">
+                        <button onClick={HandleReq}>Feedback / Review
+                        </button></li>
                 </ul>
             </div>
 

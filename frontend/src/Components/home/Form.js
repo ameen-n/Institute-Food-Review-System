@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 import { defaultformAction } from "../../store/defaultformstore";
 import { fooditemAction } from "../../store/fooditemStore";
@@ -18,6 +19,7 @@ export default function Form() {
     });
     const [redirect, setRedirect] = useState(false);
     const [rate, setRate] = useState(0);
+    const [cookies, setCookie] = useCookies(['user']);  
 
     // variables gobals
     const dispatch = useDispatch();
@@ -37,10 +39,11 @@ export default function Form() {
                 dispatch(fooditemAction.itemCheck(res))
             })
             .catch(err => console.log(err))
-        let token = sessionStorage.getItem("Token");
-        if (token) {
-            userData = JSON.parse(sessionStorage.getItem('userInfo'));
-            userData = userData._id;
+        // let token = sessionStorage.getItem("Token");
+        if (cookies.jwttoken && cookies.jwttoken !== undefined) {
+            // userData = JSON.parse(sessionStorage.getItem('userInfo'));
+            // userData = userData._id;
+            userData = cookies.ID;
         } else {
             setRedirect(true);
         }

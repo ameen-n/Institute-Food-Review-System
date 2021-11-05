@@ -2,15 +2,17 @@ import Navbar from "../Navbar"
 import { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import MenuCard from "./MenuCard";
+import { useCookies } from "react-cookie";
 
 export default function MessMenu() {
 
     const [redirect, setRedirect] = useState(false);
     const [menudata, setMenudata] = useState([]);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        if (token) {
+        // let token = sessionStorage.getItem("Token");
+        if (cookies.jwttoken) {
 
         } else {
             setRedirect(true);
@@ -47,10 +49,9 @@ export default function MessMenu() {
                                                 <th className="cell100 column1">Food Item</th>
                                                 <th className="cell100 column2">Timing</th>
                                                 <th className="cell100 column3">Day</th>
-                                                <th className="cell100 column4">Update</th>
-                                                <th className="cell100 column5">Delete</th>
+                                                <th className="cell100 column4">Rating</th>
                                             </tr>
-                                        </thead>
+                                        </thead> 
                                     </table>
                                 </div>
                             {console.log(menudata)}

@@ -8,6 +8,8 @@ router.get("/form" , form_control.fetchForms);
 
 router.get("/form/:id" , form_control.fetchFormPer);
 
+router.get("/rating/:fooditem" , form_control.fetchFormPerFood);
+
 router.post("/form" , form_control.newForm);
 
 router.put('/form/:id' , form_control.updateForm);

@@ -3,18 +3,20 @@ import Navbar from "../../Navbar";
 import MenuCard from "../../MessMenu/MenuCard";
 import { useParams , Redirect  } from "react-router";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function PerdayFood(){
     const { id } = useParams();
     let history = useHistory();
     const [data , setData] = useState([]);
     const [redirect, setRedirect] = useState(false);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        // let token = sessionStorage.getItem("Token");
+        // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
-        if (token && userInfo && userInfo.isAdmin) {
+        if (cookies.jwttoken  && cookies.ADMIN) {
 
         } else {
             setRedirect(true);

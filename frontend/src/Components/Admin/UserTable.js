@@ -2,22 +2,24 @@ import Navbar from "../Navbar";
 import { useEffect , useState } from "react";
 import UserCard from "./UserCard";
 import { Redirect } from "react-router";
+import { useCookies } from "react-cookie";
 
 export default function MenuTable(){
 
     const [redirect, setRedirect] = useState(false);
     const [menudata, setMenudata] = useState([]);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        // let token = sessionStorage.getItem("Token");
+        // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
-        if (token && userInfo && userInfo.isAdmin) {
+        if (cookies.jwttoken  && cookies.ADMIN) {
 
         } else {
             setRedirect(true);
         }
-        if(userInfo && userInfo.isAdmin){
+        if(cookies.jwttoken  && cookies.ADMIN){
             fetch(process.env.REACT_APP_BACKEND + "/admin/users", {
                 method: "GET",
                 headers: {

@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require("cookie-parser")
 
 const userAuth = require("./routes/user.js");
 const menuAuth = require("./routes/menu.js");
@@ -19,8 +20,13 @@ mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true , useUnifiedTopol
 //MiddleWare
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-
+app.use(cookieParser());
+app.use(cors(
+    {
+        origin : "http://localhost:3000",
+        credentials : true
+    }
+));
 
 app.use("/api",userAuth);
 app.use("/menu" , menuAuth);

@@ -78,6 +78,15 @@ exports.login = (req, res) => {
                         (err, jsonToken) => {
                             if (err) throw err;
                             else {
+                                res.cookie("jwtoken" , jsonToken , {
+                                    expires : new Date(Date.now() + 48*360000),
+                                    httpOnly : true
+                                })
+                                res.cookie("admin" , foundUser.isAdmin , {
+                                    expires : new Date(Date.now() + 48*360000),
+                                    httpOnly : true
+                                })
+
                                 foundUser.password = undefined;
                                 res.json({ jsonToken, message: "Login SuccesFully Done.", user: foundUser });
                                 // console.log(foundUser);
@@ -115,7 +124,7 @@ exports.googlelogin = (req , res) =>{
         }
         if(email_verified){
             user.findOne({email}).exec((err , us) =>{
-                // console.log(err , us)
+                // console.log(err , us)z
                 if(err){
                     return res.status(400).json({
                         error : "someithing went wrong..."
@@ -135,7 +144,18 @@ exports.googlelogin = (req , res) =>{
                                 if (err) throw err;
                                 else {
                                     us.password = undefined;
-                                    return res.json({ jsonToken, message: "Login SuccesFully Done.", user: us });
+                                    return res.cookie("jwtoken" , jsonToken , {
+                                        expires : new Date(Date.now() + 48*360000),
+                                        httpOnly : true,
+                                        secure : false
+                                    })
+                                    .json({ jsonToken, message: "Login SuccesFully Done.", user: us });
+                                    // res.cookie("admin" , us.isAdmin , {
+                                    //     expires : new Date(Date.now() + 48*360000),
+                                    //     httpOnly : true
+                                    // })
+    
+                                    
                                 }
                             }
                         )
@@ -180,6 +200,15 @@ exports.googlelogin = (req , res) =>{
                                         (err, jsonToken) => {
                                             if (err) throw err;
                                             else {
+                                                res.cookie("jwtoken" , jsonToken , {
+                                                    expires : new Date(Date.now() + 48*360000),
+                                                    httpOnly : true
+                                                })
+                                                res.cookie("admin" , new_user.isAdmin , {
+                                                    expires : new Date(Date.now() + 48*360000),
+                                                    httpOnly : true
+                                                })
+                
                                                 new_user.password = undefined;
                                                 return res.status(200).json({ jsonToken, message: "Login SuccesFully Done.", user: new_user });
                                             }

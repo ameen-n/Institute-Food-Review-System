@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import store from "./store/index";
 import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.render(
+  <CookiesProvider>
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider>
+  </CookiesProvider>,
   document.getElementById('root')
 );
 

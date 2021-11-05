@@ -1,8 +1,22 @@
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 export default function MenuCard(props) {
 
+    const [checkadmin , setCheckadmin] = useState(true);
+    const [cookies, setCookie] = useCookies(['user']);
 
+    useEffect(() => {
+        // let token = sessionStorage.getItem("Token");
+        // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+
+        if (cookies.jwttoken  && cookies.ADMIN == true) {
+
+        } else {
+            setCheckadmin(false);
+        }
+    }, [])
     const onDelete = id => {
         if (window.confirm('Are you sure to delete this record?')){
         fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id, {
@@ -26,7 +40,9 @@ export default function MenuCard(props) {
                             <td className="cell100 column1">{props.value.fooditem}</td>
                             <td className="cell100 column2">{props.value.timing}</td>
                             <td className="cell100 column3">{props.value.day}</td>
-                            <td className="cell100 column4">
+                            {checkadmin && 
+                                <>
+                                <td className="cell100 column4">
                                 <NavLink className="btn btn-sm btn-success" to={"/menutable/update/" + props.value._id}>
                                     Update
                                 </NavLink>
@@ -36,6 +52,14 @@ export default function MenuCard(props) {
                                     Delete
                                 </button>
                             </td>
+                            </>
+                             }
+                             <td className="cell100 column4">
+                                <NavLink className="btn btn-sm btn-success" to={"/menutable/checkrating/" + props.value.fooditem}>
+                                    Rating
+                                </NavLink>
+                            </td>
+                            
                             
                         </tr>
                     </tbody>

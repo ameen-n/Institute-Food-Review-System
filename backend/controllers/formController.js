@@ -57,7 +57,8 @@ exports.newForm = (req , res) =>{
                 timing : timeOfDay,
                 day : weekDay,
                 Food : ratingKeyArray[index],
-                Rating : ratingValueArray[index]
+                Rating : ratingValueArray[index][0],
+                Comment : ratingValueArray[index][1]
             };
             DataArray.push(temp);
         }
@@ -97,6 +98,14 @@ exports.fetchForms = (req, res) => {
 
 exports.fetchFormPer = (req, res) => {
     form.findById({ _id: req.params.id })
+        .then(fetchedForm => res.json(fetchedForm))
+        .catch(err => console.log(err))
+}
+
+exports.fetchFormPerFood = (req, res) => {
+    ratingForm.find({ Food : req.params.fooditem })
+        .populate('UserId' , 'Name image')
+        .select('Rating Name Comment image' )
         .then(fetchedForm => res.json(fetchedForm))
         .catch(err => console.log(err))
 }

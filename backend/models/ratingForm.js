@@ -34,6 +34,11 @@ const ratingFormSchema = mongoose.Schema({
         type: Number,
         required: true,
         default: 1
+    },
+    Comment : {
+        type : String,
+        trim : true,
+        default : ""
     }
 }, {timestamps: true });
 
