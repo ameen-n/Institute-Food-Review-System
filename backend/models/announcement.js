@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema.Types;
 
 const Announcement = mongoose.Schema({
     userID: {
-        type: String,
+        type: ObjectId,
         required: true
     },
     text: {
-        type: Number,
+        type: String,
         required: true,
         default: 1
     },

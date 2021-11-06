@@ -3,11 +3,11 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const Blog = mongoose.Schema({
     userID: {
-        type: String,
+        type: ObjectId,
         required: true
     },
     text: {
-        type: Number,
+        type: String,
         required: true,
         default: 1
     },
