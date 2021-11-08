@@ -5532,4 +5532,43 @@ margin-bottom:10px;
 }
 .review-block-description{
 font-size:13px;
+text-align: left;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+  margin: auto;
+}
+
+.pagination a {
+  padding: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 5px;
+  border: 1px solid #6c7ac9;
+  color: #6c7ac9;
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color: #fff !important;
+  background: #6c7ac9;
+}
+
+.pagination__link--disabled a {
+  color: rgb(198, 197, 202);
+  border: 1px solid rgb(198, 197, 202);
+}
+.pagination li{
+  margin: 12px;
+}
+
+.mainsection-static {
+  background-color: #f7f7f7;
 }

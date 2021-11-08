@@ -11,7 +11,8 @@ import PerdayFood from "./Components/Admin/MenuShow/PerdayFood";
 import review2 from "./Components/From/Review2";
 import UpdateMenu from "./Components/MessMenu/UpdateMenu";
 import FormTable from "./Components/Admin/FormTable";
-import fooditem from "./Components/home/fooditem";
+import RatingPerFood from "./Components/MessMenu/RatingPerFood";
+import Static from "./Components/Statistic/Static";
 
 //css pages
 import './assets/css/bootstrap.min.css';
@@ -39,13 +40,14 @@ function App() {
               <Route exact path="/review" component={Form} />
               <Route exact path="/review2" component={review2} />
               <Route exact path="/usertable" component={UserTable} />
+              <Route exact path="/static" component={Static} />
               <Route exact path="/menutable" component={MenuTable} />
               <Route exact path="/menutable/:id" component={PerdayFood} />
               <Route exact path="/mess/:id" component={PerdayFood} />
               <Route exact path="/menutable/update/:id" component={UpdateMenu} />
+              <Route exact path="/menutable/checkrating/:fooditem" component={RatingPerFood} />
               <Route exact path="/formtable" component={FormTable} />
               <Route exact path="/logout" component={Logout} />
-              <Route exact path="/fooditem" component={fooditem} />
               <Route component={Error} />
             </Switch>
 

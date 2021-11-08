@@ -1,15 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { useCookies } from "react-cookie";
 
 export default function MenuCard(props) {
 
     const [checkadmin, setCheckadmin] = useState(true);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-        if (token && userInfo && userInfo.isAdmin) {
+        if (cookies.jwttoken  && cookies.ADMIN == "true") {
 
         } else {
             setCheckadmin(false);
@@ -53,7 +52,11 @@ export default function MenuCard(props) {
                                     </td>
                                 </>
                             }
-
+                            <td className={checkadmin ? "cell100 column6" : "cell100 column4"}>
+                                <NavLink className="btn btn-sm btn-success" to={"/menutable/checkrating/" + props.value.fooditem}>
+                                    Detail
+                                </NavLink>
+                            </td>
 
                         </tr>
                     </tbody>

@@ -5,10 +5,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 import { defaultformAction } from "../../store/defaultformstore";
 import { fooditemAction } from "../../store/fooditemStore";
 import Navbar from "../Navbar";
+
 
 export default function Form() {
     // all states
@@ -18,6 +20,7 @@ export default function Form() {
     });
     const [redirect, setRedirect] = useState(false);
     const [rate, setRate] = useState(0);
+    const [cookies, setCookie] = useCookies(['user']);  
 
     // variables gobals
     const dispatch = useDispatch();
@@ -25,6 +28,7 @@ export default function Form() {
     let history = useHistory();
 
     useEffect(() => {
+
         fetch(process.env.REACT_APP_BACKEND + "/menu/menuitem", {
             method: "GET",
             headers: {
@@ -37,13 +41,11 @@ export default function Form() {
                 dispatch(fooditemAction.itemCheck(res))
             })
             .catch(err => console.log(err))
-        let token = sessionStorage.getItem("Token");
-        if (token) {
-            userData = JSON.parse(sessionStorage.getItem('userInfo'));
-            userData = userData._id;
-        } else {
-            setRedirect(true);
-        }
+            if (cookies.jwttoken && cookies.jwttoken !== undefined) {
+                userData = cookies.ID;
+            } else {
+                setRedirect(true);
+            }
 
     }, [])
 
@@ -85,7 +87,7 @@ export default function Form() {
                     DidLike: data.isLike === "Yes" ? true : false,
                     Rating: rate,
                     Comment: data.Comment,
-                    UserId: JSON.parse(sessionStorage.getItem('userInfo'))._id,
+                    UserId: cookies.ID,
                     RatingFoods: {},
                     LikeFoods: []
                 }
@@ -112,6 +114,9 @@ export default function Form() {
                             isLike: "",
                             comment: "",
                         })
+                        dispatch(defaultformAction.commentCheck(""));
+                        dispatch(defaultformAction.likeCheck(""));
+                        dispatch(defaultformAction.ratingCheck(0));
                         setTimeout(() => {
                             window.location.reload();
                         }, 2000);
@@ -186,7 +191,7 @@ export default function Form() {
                                             count={5}
                                             onChange={ratingChanged}
                                             size={24}
-                                            isHalf={true}
+                                            isHalf={false}
                                             emptyIcon={<i className="far fa-star"></i>}
                                             halfIcon={<i className="fa fa-star-half-alt"></i>}
                                             fullIcon={<i className="fa fa-star"></i>}

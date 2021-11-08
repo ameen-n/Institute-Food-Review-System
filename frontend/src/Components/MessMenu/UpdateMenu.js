@@ -5,6 +5,7 @@ import { Redirect } from "react-router";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const ItemsTime = ['Breakfast', 'Lunch', 'Snacks', 'Dinner'];
@@ -17,14 +18,15 @@ export default function UpdateMenu() {
         day: ""
     })
     const [redirect , setRedirect] = useState(false);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        if (token) {
+        if (cookies.jwttoken) {
 
         } else {
             setRedirect(true);
         }
+
 
         fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id, {
             method: "GET",

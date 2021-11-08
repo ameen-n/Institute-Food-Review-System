@@ -1,17 +1,16 @@
 import { useState , useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
+import { useCookies } from "react-cookie";
 
 
 export default function Hero(){
 
     const [redirect, setRedirect] = useState(false);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let taken = sessionStorage.getItem("Token");
-        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-        if(taken && taken !== undefined){
-            if(userInfo && userInfo.isAdmin ){
+        if(cookies.jwttoken){
+            if(cookies.ADMIN === "true"){
                 setRedirect(true);
             }
         }else{

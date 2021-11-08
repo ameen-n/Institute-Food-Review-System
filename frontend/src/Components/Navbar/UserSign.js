@@ -10,7 +10,12 @@ export default function UserSign(){
                 <ul id="nav" className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <NavLink
-                            exact to="/">Home</NavLink></li>
+                            exact to="/">Home</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink 
+                            exact to="/static">Statistics</NavLink>
+                    </li>
                     <li className="nav-item">
                         <NavLink exact to="/mess">Mess Menu</NavLink>
                     </li>

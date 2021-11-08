@@ -2,16 +2,15 @@ import Navbar from "../Navbar";
 import { useEffect , useState } from "react";
 import { Redirect } from "react-router"
 import FormCard from "./FormCard";
+import { useCookies } from "react-cookie";
 
 export default function FormTable(){
     const [redirect, setRedirect] = useState(false);
     const [menudata, setMenudata] = useState([]);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-
-        if (token && userInfo && userInfo.isAdmin) {
+        if (cookies.jwttoken  && cookies.ADMIN === "true") {
 
         } else {
             setRedirect(true);

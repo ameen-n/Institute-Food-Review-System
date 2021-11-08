@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import MenuCard from "./MenuCard";
 import ShowButton from "../Admin/MenuShow/ShowButton";
+import { useCookies } from "react-cookie";
 
 const day = ["Sunday" , "Monday", "Tuesday" , "Wednesday" , "Thursday" , "Friday", "Saturday"];
 
@@ -10,10 +11,10 @@ export default function MessMenu() {
 
     const [redirect, setRedirect] = useState(false);
     const [menudata, setMenudata] = useState([]);
+    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        let token = sessionStorage.getItem("Token");
-        if (token) {
+        if (cookies.jwttoken) {
 
         } else {
             setRedirect(true);
@@ -57,6 +58,7 @@ export default function MessMenu() {
                                                 <th className="cell100 column1">Food Item</th>
                                                 <th className="cell100 column2">Timing</th>
                                                 <th className="cell100 column3">Day</th>
+                                                <th className="cell100 column4">View</th>
                                             </tr>
                                         </thead>
                                     </table>
