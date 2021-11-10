@@ -45,14 +45,14 @@ export default function MenuCard(props) {
                                             Update
                                         </NavLink>
                                     </td>
-                                    <td className="cell100 column5">
+                                    <td className="cell100 column4">
                                         <button type="submit" className="btn btn-sm btn-danger" onClick={() => onDelete(props.value._id)} >
                                             Delete
                                         </button>
                                     </td>
                                 </>
                             }
-                            <td className={checkadmin ? "cell100 column6" : "cell100 column4"}>
+                            <td className={checkadmin ? "cell100 column4" : "cell100 column4"}>
                                 <NavLink className="btn btn-sm btn-success" to={"/menutable/checkrating/" + props.value.fooditem}>
                                     Detail
                                 </NavLink>

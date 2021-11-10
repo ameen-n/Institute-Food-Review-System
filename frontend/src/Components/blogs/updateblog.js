@@ -4,31 +4,31 @@ import Navbar from "../Navbar";
 import { Redirect } from "react-router";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const ItemsTime = ['Breakfast', 'Lunch', 'Snacks', 'Dinner'];
-export default function UpdateMenu() {
+export default function Updateblog() {
     const history = useHistory();
+    const [cookies, setCookie] = useCookies(['user']);
+    const [image , setImage] = useState("");
     const { id } = useParams();
+    // const l = JSON.parse(sessionStorage.getItem("userInfo"));
     const [data, setData] = useState({
-        fooditem: "",
-        timing: "",
-        day: ""
+        userID: cookies.ID,
+        image: "",
+        text: ""
     })
     const [redirect , setRedirect] = useState(false);
-    const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
-        if (cookies.jwttoken && cookies.ADMIN === "true") {
+        if (cookies.jwttoken) {
 
         } else {
             setRedirect(true);
         }
-
-
-        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id, {
+        fetch(process.env.REACT_APP_BACKEND + "/blog/blog/" + id, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -37,16 +37,33 @@ export default function UpdateMenu() {
         })
             .then(res => res.json())
             .then(fetchedata => {
-                // console.log(fetchedata)
+                console.log(fetchedata)
                 setData({
                     ...data,
-                    fooditem: fetchedata[0].fooditem,
-                    timing: fetchedata[0].timing,
-                    day: fetchedata[0].day
+                    text  : fetchedata[0].text
                 })
+                setImage(fetchedata[0].image)
             })
             .catch(err => console.log(err));
     }, [id])
+
+    const uploadChange = async (e) => {
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "ifmsImage");
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dnvqpohyb/image/upload",
+          {
+            method: "POST",
+            body: data
+          }
+        );
+    
+        const file = await res.json();
+        console.log(file);
+        setImage(file.secure_url);
+      };
 
     const InputData = (e) => {
         const {name , value} = e.target;
@@ -60,14 +77,19 @@ export default function UpdateMenu() {
 
     const SubmitHandle = (e) =>{
         e.preventDefault();
-        console.log(data);
-        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/" + id, {
+        let temp_data = {
+            userID: cookies.ID,
+            image: image,
+            text: data.text
+        }
+        console.log(temp_data);
+        fetch(process.env.REACT_APP_BACKEND + "/blog/blog/" + id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(temp_data)
         }).then(res => res.json())
         .then(res => {
             toast.success('Successfully updated', {
@@ -80,7 +102,7 @@ export default function UpdateMenu() {
                 progress: undefined,
             });
             setTimeout(() => {
-                history.push("/menutable");
+                history.push("/blogs");
             }, 2000);
         })
         .catch(err => console.log(err))
@@ -91,55 +113,33 @@ export default function UpdateMenu() {
         <>
             <Navbar />
             {redirect && <Redirect to="/" />}
+            
             <section className="mainsectionreview">
                 <div class="page-wrapper p-t-180 p-b-100">
                     <div class="wrapper wrapper--w960">
                         <div class="card card-2">
                             <div class="card-body">
-                                <h2 class="title">Update Form</h2>
+                                <h2 class="title">Update Blog</h2>
                                 <form onSubmit={SubmitHandle}>
                                     <h4> 
-                                        <label className="form-control-label">Food Item</label>
+                                        <label className="form-control-label"></label>
                                     </h4>
+                                    
+                                    <div className="btn #64b5f6 blue darken-1">
+                                    <span>Uplaod Image</span>
+                                    <input type="file" name="image"  onChange={uploadChange} />
+                                    </div>
+                                    <br/>
+                                    <img src={image} alt="not imag" />
+                                    <br></br>
                                     <div className="input-group">
                                         <input class="input--style-2" 
                                             type="text"
-                                            placeholder="Enter Food Item"
-                                            name="fooditem"
-                                            value={data.fooditem}
+                                            placeholder="Enter text"
+                                            name="text"
+                                            value={data.text}
                                             onChange={InputData} />
                                     </div>
-                                    {weekdays.map((val , index) => {
-                                        return (
-                                            <div key={index} className="form-check form-check-inline">
-                                                <input
-                                                    className="radio-simple"
-                                                    type="radio"
-                                                    name="day"
-                                                    onChange={InputData}
-                                                    value={val} />
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    {val}
-                                                </label>
-                                            </div>
-                                        )
-                                    })}
-                                    <br></br>
-                                    {ItemsTime.map((val , index) => {
-                                        return (
-                                            <div key={index} className="form-check form-check-inline">
-                                                <input
-                                                    className="radio-simple"
-                                                    type="radio"
-                                                    name="timing"
-                                                    onChange={InputData}
-                                                    value={val} />
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    {val}
-                                                </label>
-                                            </div>
-                                        )
-                                    })}
                                     <br/>
                                     <button class="btn btn-sm btn-success mt-4 " type="submit">
                                         Submit
@@ -164,4 +164,3 @@ export default function UpdateMenu() {
         </>
     )
 }
-

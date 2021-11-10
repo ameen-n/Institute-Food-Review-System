@@ -17,6 +17,12 @@ export default function UserSign(){
                             exact to="/static">Statistics</NavLink>
                     </li>
                     <li className="nav-item">
+                        <NavLink exact to="/blogs">Blogs</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink exact to="/Announcement">Announcements</NavLink>
+                    </li>
+                    <li className="nav-item">
                         <NavLink exact to="/mess">Mess Menu</NavLink>
                     </li>
                     <li className="nav-item">

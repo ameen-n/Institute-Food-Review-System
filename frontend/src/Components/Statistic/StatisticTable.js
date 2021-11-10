@@ -22,7 +22,6 @@ export default function(props){
 
     return (
         <>
-            <section className="mainsection">
                 <div className="limiter">
                     <div className="container-table100">
                         <div className="wrap-table100">
@@ -45,21 +44,26 @@ export default function(props){
                                         <ShowbuttonCard key={val.id} value={val} />
                                     )
                                 })}
-                                <ReactPaginate
-                                    breakLabel="..."
-                                    nextLabel="next >"
-                                    onPageChange={handlePageClick}
-                                    pageRangeDisplayed={5}
-                                    pageCount={pageCount}
-                                    previousLabel="< previous"
-                                    renderOnZeroPageCount={null}
-                                />
+                                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                    <ReactPaginate 
+                                        containerClassName={"pagination"}
+                                        previousLinkClassName={"pagination__link"}
+                                        nextLinkClassName={"pagination__link"}
+                                        disabledClassName={"pagination__link--disabled"}
+                                        activeClassName={"pagination__link--active"}
+                                        breakLabel="..."
+                                        nextLabel="Next"
+                                        onPageChange={handlePageClick}
+                                        pageRangeDisplayed={5}
+                                        pageCount={pageCount}
+                                        previousLabel="Previous"
+                                        renderOnZeroPageCount={null}
+                                    /> 
+                                </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
-            </section>
         </>
     )
 }

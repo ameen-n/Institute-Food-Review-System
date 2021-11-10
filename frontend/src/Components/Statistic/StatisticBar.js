@@ -36,8 +36,8 @@ export default function StatisticBar(props) {
     }
     return (
         <>
-            <hr />
-            <h2 className="text-center mb-10">Total Submition chart</h2>
+            <div className="container mb-100 mx-auto bg-white rounded p-5 shadow">
+            <h2 className="text-center mb-10">Total Submission chart</h2>
             <Bar
                 data={state}
                 options={{
@@ -53,7 +53,7 @@ export default function StatisticBar(props) {
                     }
                 }}
             />
-            <hr />
+            </div>
         </>
     )
 }

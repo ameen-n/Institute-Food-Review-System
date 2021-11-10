@@ -27,8 +27,7 @@ export default function StatisticPie(props) {
 
     return (
         <>
-            <hr />
-            <div className="row mt-10 mb-100">
+            <div className="row mt-10 mb-100 container mx-auto bg-white rounded p-5 shadow">
                 <div className="col-1"></div>
                 <div className="col-4">
                     <h3 className="text-center">Total like to dislike</h3>
