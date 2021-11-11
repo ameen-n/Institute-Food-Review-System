@@ -9,7 +9,11 @@ export default function StatisticPie(props) {
 
     let likeKeys = [] , likeValue = [] , ratingKey = [] , ratingValue = [];
                     props.value.likeonePer.forEach(element => {
-                    likeKeys.push(element._id);
+                    if(element._id == "false")
+                        likeKeys.push("Dislike");
+                        else
+                        likeKeys.push("Like");
+                        
                     likeValue.push(element.count);
                 });
 

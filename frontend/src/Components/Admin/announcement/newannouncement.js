@@ -79,7 +79,7 @@ export default function NewAnnouncement() {
         }).then(res => res.json())
         
         .then(res => {
-            toast.success('Successfully added', {
+            toast.success('Successfully added.', {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -115,7 +115,7 @@ export default function NewAnnouncement() {
                                     </h4>
                                     
                                     <div className="btn #64b5f6 blue darken-1">
-                                    <span>Uplaod Image</span>
+                                    <span>Upload Image</span>
                                     <input type="file" name="image" onChange={uploadChange} />
                                     </div>
                                         

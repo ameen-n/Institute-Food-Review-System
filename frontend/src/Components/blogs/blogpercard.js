@@ -35,7 +35,7 @@ export default function Blogcard(props) {
                 </div>
                 <br />
 
-                <img className="review-image" src={props.value.image} classname="img-thumbnail" width="300px" height="300px" alt="Cinque Terre" />
+                <img className="review-image" src={props.value.image} classname="img-thumbnail" width="300px" height="300px" alt=" " />
                 <div class="review-block-description">{props.value.text}</div>
             </div>
         </>

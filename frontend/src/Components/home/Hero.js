@@ -30,7 +30,7 @@ export default function Hero(){
                         <div class="home-slider">
                             <div class="hero-text">
                                 <h1 class="wow fadeInUp" data-wow-delay=".3">Institute <br/> Food Review <br/> System</h1>
-                                <p class="wow fadeInUp" data-wow-delay=".5s">“One cannot think well, love well, sleep <br/> well if one has not dined well”</p>
+                                <p class="wow fadeInUp" data-wow-delay=".5s">“One cannot think well, love well, or sleep <br/> well if one has not dined well”</p>
                                 <p class="wow fadeInUp author" data-wow-delay=".5s"> Virginia Woolf </p>
                                 {redirect && <div class="button wow fadeInUp" data-wow-delay=".7s">
                                     <NavLink to="/review" class="btn">Submit Review</NavLink>

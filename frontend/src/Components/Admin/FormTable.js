@@ -27,7 +27,7 @@ export default function FormTable(){
                 console.log(data)
                 setMenudata(data)
             })
-            .catch(err => console.log("something wrong"))
+            .catch(err => console.log("Something went wrong with your request!"))
 
     }, [])
 

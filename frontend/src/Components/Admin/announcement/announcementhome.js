@@ -20,6 +20,8 @@ export default function Announcement() {
         } else {
             setCheckadmin(false);
         }
+        if(cookies.jwttoken){} 
+        else {setRedirect(true)}
 
         fetch(process.env.REACT_APP_BACKEND + "/announcement/announcement", {
             method: "GET",
@@ -32,7 +34,7 @@ export default function Announcement() {
                 console.log(blogdata)
                 setMenudata(blogdata)
             })
-            .catch(err => console.log("something wrong"))
+            .catch(err => console.log("Something went wrong with your request!"))
 
 
     }, [])

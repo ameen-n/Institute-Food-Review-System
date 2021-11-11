@@ -20,15 +20,15 @@ export default function Announcementcard(props) {
     }, [])
     
     const onDelete = id => {
-        if (window.confirm('Are you sure to delete this record?')) {
-            fetch(process.env.REACT_APP_BACKEND + "/announcement/announcement/" + cookies.ID, {
+        if (window.confirm('Are you sure you want to delete this record? This cannot be reversed.')) {
+            fetch(process.env.REACT_APP_BACKEND + "/announcement/announcement/" + id, {
                 method: "DELETE",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             }).then((res) => {
-                console.log("succesfully deleted")
+                console.log("Succesfully Deleted!")
                 window.location.reload();
             }).catch(err => console.log(err))
         }
@@ -37,7 +37,7 @@ export default function Announcementcard(props) {
     return (
         <>
             <div class="col-sm-3">
-                <img src={checkadmin ? props.value.userID.image : Image} class="img-rounded" />
+                <img src={checkadmin ? props.value.userID.image : Image} class="img-rounded" width="150px" height="150px" />
                 <div class="review-block-name"><p>{checkadmin  ? props.value.userID.Name : "ADMIN"}</p></div>
                 <div class="review-block-date">{props.value.createdAt.substring(0, 10)}<br />{props.value.createdAt.substring(11, 19)}</div>
             </div>
@@ -53,8 +53,8 @@ export default function Announcementcard(props) {
                 </div>
             }
             <br />
-                <img className="review-image" src={props.value.image} classname="img-thumbnail" width="300px" height="300px" alt="Cinque Terre" />
-                <div class="review-block-description">{props.value.text}</div>
+                <img className="review-image" src={props.value.image} classname="img-thumbnail" width="300px" height="300px" alt=" " />
+                <div class="review-block-description"><p class="fs-5 mb-1">{props.value.text}</p></div>
             </div>
            
 

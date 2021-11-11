@@ -37,7 +37,7 @@ export default function BlogPer() {
                 console.log(blogdata)
                 setMenudata(blogdata)
             })
-            .catch(err => console.log("something wrong"))
+            .catch(err => console.log("Something went wrong."))
 
 
     }, [])

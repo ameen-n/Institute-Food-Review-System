@@ -31,7 +31,7 @@ export default function MenuTable() {
             .then(data => {
                 setMenudata(data)
             })
-            .catch(err => console.log("something wrong"))
+            .catch(err => console.log("Something went wrong."))
 
     }, [])
     return (

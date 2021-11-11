@@ -36,7 +36,7 @@ export default function MessMenu() {
                 headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
             })
             try{  menudataOne.json().then(data => {temp  = 1;  dispatch(averagedataAction.itemCheck(data)) })}
-            catch{  console.log("something is werogn") }
+            catch{  console.log("Something went wrong with your request.") }
         }
 
         if(Object.keys(likedataStore).length === 0){
@@ -45,7 +45,7 @@ export default function MessMenu() {
                 headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
             })
             try{ likedataOne.json().then(data => { temp = 1;  dispatch(averagedataAction.likedataCheck(data)) })}
-            catch{  console.log("something is werogn") }
+            catch{  console.log("Something went wrong with your request.") }
         }
 
         if(submitdataStore.length === 0){
@@ -54,7 +54,7 @@ export default function MessMenu() {
                 headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
             })
             try{ submitdataOne.json().then(data => { temp = 1;  dispatch(averagedataAction.submitdataCheck(data)) })}
-            catch{  console.log("something is werogn") }
+            catch{  console.log("Something went wrong with your request.") }
         }
         
         const todaySubmitOne = await fetch(process.env.REACT_APP_BACKEND + "/form/form/todaysubmit", {
@@ -69,7 +69,7 @@ export default function MessMenu() {
             })
 
         }catch{
-            console.log("something is werogn")
+            console.log("Something went wrong with your request.")
         }
     }, [temp])
 

@@ -52,7 +52,7 @@ export default function Review2() {
         }
         console.log(ratingArr);
         if (formlike === "" || formrating === 0) {
-            toast.error('Some Error please try again', {
+            toast.error('Error! Try again.', {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -83,8 +83,8 @@ export default function Review2() {
                 body: JSON.stringify(defaultData)
             }).then(res => res.json())
                 .then((res) => {
-                    if (res.message === "Form save successfully") {
-                        toast.success('Thanks for filling the form', {
+                    if (res.message === "Form saved successfully") {
+                        toast.success('Thank you for filling the form', {
                             position: "top-center",
                             autoClose: 2000,
                             hideProgressBar: false,
@@ -98,7 +98,7 @@ export default function Review2() {
                         }, 2000);
                     }
                     else {
-                        toast.error('Some Error please try again', {
+                        toast.error('Error! Please try again', {
                             position: "top-center",
                             autoClose: 2000,
                             hideProgressBar: false,

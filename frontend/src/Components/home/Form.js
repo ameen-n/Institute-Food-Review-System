@@ -68,11 +68,11 @@ export default function Form() {
     //submit handler
     const SubmitHandler = (e) => {
         e.preventDefault();
-        let result = window.confirm("Will you Continue to fill the form....");
+        let result = window.confirm("Do you want to continue to fill the form?");
 
         if (!result) {
             if (rate === 0 || data.isLike === "") {
-                toast.warning('Please Filled The Form Completely', {
+                toast.warning('Please fill the form completely!', {
                     position: "top-center",
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -125,7 +125,7 @@ export default function Form() {
             }
         } else {
             if (rate === 0 || data.isLike === "") {
-                return toast.warning('Please Filled The Form Completely', {
+                return toast.warning('Please fill the form completely.', {
                     position: "top-center",
                     autoClose: 2000,
                     hideProgressBar: false,

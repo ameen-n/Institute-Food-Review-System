@@ -92,7 +92,7 @@ export default function UpdateAnnouncement() {
             body: JSON.stringify(temp_data)
         }).then(res => res.json())
         .then(res => {
-            toast.success('Successfully updated', {
+            toast.success('Successfully updated.', {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -119,7 +119,7 @@ export default function UpdateAnnouncement() {
                     <div class="wrapper wrapper--w960">
                         <div class="card card-2">
                             <div class="card-body">
-                                <h2 class="title">Update Annoucement</h2>
+                                <h2 class="title">Update Announcement</h2>
                                 <form onSubmit={SubmitHandle}>
                                     <h4> 
                                         <label className="form-control-label"></label>

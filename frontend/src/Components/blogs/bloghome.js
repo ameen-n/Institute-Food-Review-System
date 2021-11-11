@@ -8,14 +8,17 @@ import Blogcard from "./blogcard";
 export default function Blog() {
     const [checkadmin, setCheckadmin] = useState(false);
     const [cookies, setCookie] = useCookies(['user']);
+    const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
+        if(cookies.jwttoken){}
+        else {setRedirect(true)}
+
         if (cookies.jwttoken && cookies.ADMIN === "true") {
             setCheckadmin(true);
         } 
     }, [])
 
-    const [redirect, setRedirect] = useState(false);
     const [blogdata, setMenudata] = useState([]);
     //const {state,dispatch} = useContext()
 
@@ -32,7 +35,7 @@ export default function Blog() {
                 // console.log(blogdata)
                 setMenudata(blogdata)
             })
-            .catch(err => console.log("something wrong"))
+            .catch(err => console.log("Something went wrong."))
 
 
     }, [])
