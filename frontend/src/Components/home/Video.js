@@ -9,13 +9,13 @@ export default function Video(){
             <div class="row">
                 <div class="col">
                     <div class="section-title white-text">
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Bhoopali Mess</h2>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Keervani Mess</h2>
                         <img src={Img1} alt="Bhoopali"/>
                     </div>
                 </div>
                 <div class="col">
                     <div class="section-title white-text">
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Keervani Mess</h2>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Bhoopali Mess</h2>
                         <img src={Img2} alt="Keervani"/>
                     </div>
                 </div>

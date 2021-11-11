@@ -1,10 +1,9 @@
-import GoogleLogin from "react-google-login";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/images/logo/logo.png'
+import { useCookies } from 'react-cookie';
 
 import React from "react";
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import AdminSign from "./Navbar/AdminSign";
@@ -13,12 +12,11 @@ import Normal from "./Navbar/Normal";
 
 export default function Navbar() {
     
-    
+    const [cookies, setCookie] = useCookies(['user']);  
 
     const ChangeNav = () => {
-        if (sessionStorage.getItem('Token') && sessionStorage.getItem('Token') !== undefined) {
-            let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-            if (userInfo !== null && userInfo.isAdmin) {
+        if (cookies.jwttoken && cookies.jwttoken !== undefined) {
+            if (cookies.ADMIN !== null && cookies.ADMIN === "true") {
                 return (
                     <AdminSign />
                 )

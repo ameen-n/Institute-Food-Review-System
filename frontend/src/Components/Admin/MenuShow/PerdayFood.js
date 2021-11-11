@@ -1,16 +1,15 @@
-import Navbar from "../Navbar"
 import { useEffect, useState } from "react";
-import { Redirect } from "react-router";
-import MenuCard from "./MenuCard";
-import ShowButton from "../Admin/MenuShow/ShowButton";
+import Navbar from "../../Navbar";
+import MenuCard from "../../MessMenu/MenuCard";
+import { useParams , Redirect  } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const day = ["Sunday" , "Monday", "Tuesday" , "Wednesday" , "Thursday" , "Friday", "Saturday"];
-
-export default function MessMenu() {
-
+export default function PerdayFood(){
+    const { id } = useParams();
+    let history = useHistory();
+    const [data , setData] = useState([]);
     const [redirect, setRedirect] = useState(false);
-    const [menudata, setMenudata] = useState([]);
     const [cookies, setCookie] = useCookies(['user']);
 
     useEffect(() => {
@@ -20,33 +19,30 @@ export default function MessMenu() {
             setRedirect(true);
         }
 
-        fetch(process.env.REACT_APP_BACKEND + "/menu/menu", {
-            method: "GET",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+
+        fetch(process.env.REACT_APP_BACKEND + "/menu/menu/menu/" + id , {
+            method : 'GET',
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             }
         }).then(res => res.json())
-            .then(data => {
-                setMenudata(data)
-            })
-            .catch(err => console.log("something wrong"))
-
-
-    }, [])
-
+        .then(fetchdata => {
+            console.log(fetchdata)
+            setData(fetchdata)
+        })
+        .catch(err => console.log(err))
+    }, [id])
     return (
         <>
-            <Navbar />
+           <Navbar />
             {redirect && <Redirect to="/" />}
             <section className="mainsection">
                 <div className="limiter">
-                <div class="center"> 
-                    {day.map((val , index)=>{
-                        return (
-                            <ShowButton key={index} value={val} />
-                        )
-                    })}
+                <div class="center">
+                    <button class="btn btn-info btn-md ml-3 mr-1 mb-2" onClick={() => history.goBack()}>
+                        Go Back
+                    </button>
                 </div>
                     <div className="container-table100">
                         <div className="wrap-table100">
@@ -58,23 +54,20 @@ export default function MessMenu() {
                                                 <th className="cell100 column1">Food Item</th>
                                                 <th className="cell100 column2">Timing</th>
                                                 <th className="cell100 column3">Day</th>
-                                                <th className="cell100 column4">View</th>
                                             </tr>
                                         </thead>
                                     </table>
                                 </div>
-                            {console.log(menudata)}
-                            {menudata !== undefined && menudata !== null && menudata && menudata.map((val , index) => {
-                                return (
-                                <MenuCard key={val.id} value={val} />
-                                )
-                            })}
+                                {data !== undefined && data !== null && data.length !== 0 && data.map((val , index) => {
+                                    return (
+                                        <MenuCard key={val.id} value={val} />
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </section>
+            </section> 
         </>
     )
 }
