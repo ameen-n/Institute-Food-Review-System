@@ -1,10 +1,22 @@
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import React from "react";
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
+const day ="Sunday" ;
+const DayinInt  = {
+    0 : "Sunday",
+    1  : "Monday",
+    2 : "Tuesday",
+    3  : "Wednesday",
+    4  : "Thursday",
+    5  : "Friday",
+    6  :  "Saturday"
+};
+var currentTime = new Date();
+var currentOffset = currentTime.getTimezoneOffset();
+var ISTOffset = 330;   // IST offset UTC +5:30 
+var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+let weekDay = DayinInt[ISTTime.getDay()];
 export default function AdminSign() {
     return (
         <>
@@ -12,7 +24,18 @@ export default function AdminSign() {
                 <ul id="nav" className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <NavLink 
-                            exact to="/">Home</NavLink></li>
+                            exact to="/">Home</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink 
+                            exact to="/static">Statistics</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink exact to="/blogs">Blogs</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink exact to="/Announcement">Announcements</NavLink>
+                    </li>
 
                     {/* <li className="nav-item">
                         <NavLink exact to="/view"> View
@@ -22,6 +45,7 @@ export default function AdminSign() {
                         <ul class="sub-menu">
                             <li><NavLink exact to="/usertable">Users</NavLink></li>
                             <li><NavLink exact to="/menutable">Mess Menu</NavLink></li>
+                            <li><NavLink exact to="/formtable">Form Table</NavLink></li>
                         </ul>
                     </li>
                 </ul>
@@ -31,7 +55,7 @@ export default function AdminSign() {
                 <NavLink
                     exact
                     activeClassName="menu_active"
-                    className="nav-link"
+                    className="btn btn-danger"
                     to="/logout"
                 >
                     Logout
